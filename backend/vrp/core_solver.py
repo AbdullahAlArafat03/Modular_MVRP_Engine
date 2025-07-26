@@ -55,3 +55,8 @@ def get_routes(routing, manager, solution, num_vehicles):
         routes.append(route)
     return routes
 
+routes = get_routes(solution, routing, manager)
+# Display the routes.
+for i, route in enumerate(routes):
+  print('Route', i, route)
+
