@@ -1,4 +1,4 @@
-def solve_vrp(data):
+def solve_vrp(data: VRPRequest):
     # Convert to OR-Tools format
     # Solve with constraints
     # Return list of routes
