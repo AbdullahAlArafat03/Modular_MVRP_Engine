@@ -10,8 +10,6 @@ npm run build
 solver = FastAPI()
 
 
-
-
 def distance_matrix(locations):
     size = len(locations)
     matrix = []
@@ -60,3 +58,18 @@ routes = get_routes(solution, routing, manager)
 for i, route in enumerate(routes):
   print('Route', i, route)
 
+
+def demand_callback(from_index):
+    """Returns the demand of the node."""
+    # Convert from routing variable Index to demands NodeIndex.
+    from_node = manager.IndexToNode(from_index)
+    return data["demands"][from_node]
+
+demand_callback_index = routing.RegisterUnaryTransitCallback(demand_callback)
+routing.AddDimensionWithVehicleCapacity(
+    demand_callback_index,
+    0,  # null capacity slack
+    data["vehicle_capacities"],  # vehicle maximum capacities
+    True,  # start cumul to zero
+    "Capacity",
+)
