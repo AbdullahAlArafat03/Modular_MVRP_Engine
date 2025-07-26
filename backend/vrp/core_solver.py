@@ -40,6 +40,10 @@ def ortools_solver(distance_matrix, num_vehicles, depot_index=0):
     solution = routing.SolveWithParameters(search_parameters)
     return routing, manager, solution
 
+if solution is None:
+    raise HTTPException(status_code=400, detail="No feasible solution found")
+
+
 def get_routes(routing, manager, solution, num_vehicles):
     routes = []
     for vehicle_id in range(num_vehicles):
