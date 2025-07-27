@@ -23,5 +23,5 @@ def solve_vrp(data: VRPRequest):
 
     routing, manager, solution = ortools_solver(data_model)
     # Return list of routes
-    routes = get_routes(routing, manager, solution)
+    routes = get_routes(routing, manager, solution, data["num_vehicles"])
     return {"routes": routes}
