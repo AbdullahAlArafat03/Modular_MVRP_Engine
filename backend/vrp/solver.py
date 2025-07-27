@@ -1,4 +1,4 @@
-from distance_matrix import distance_matrix
+from distance_matrix import create_distance_matrix
 
 
 def solve_vrp(data: VRPRequest):
@@ -11,7 +11,7 @@ def solve_vrp(data: VRPRequest):
     
     # Solve with constraints
     data_model = {
-    "distance_matrix": distance_matrix(locations),
+    "distance_matrix": create_distance_matrix(locations),
     "demands": demands,
     "vehicle_capacities": capacities,
     "num_vehicles": num_vehicles,
