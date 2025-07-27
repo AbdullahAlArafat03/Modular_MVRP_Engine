@@ -106,17 +106,3 @@ def get_routes(routing, manager, solution, num_vehicles):
         route.append(manager.IndexToNode(index))  # Add the final stop
         routes.append(route)
     return routes
-
-routes = get_routes(solution, routing, manager)
-# Display the routes.
-for i, route in enumerate(routes):
-  print('Route', i, route)
-
-demand_callback_index = routing.RegisterUnaryTransitCallback(demand_callback)
-routing.AddDimensionWithVehicleCapacity(
-    demand_callback_index,
-    0,  # null capacity slack
-    data["vehicle_capacities"],  # vehicle maximum capacities
-    True,  # start cumul to zero
-    "Capacity",
-)
