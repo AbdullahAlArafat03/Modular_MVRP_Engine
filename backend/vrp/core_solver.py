@@ -34,9 +34,8 @@ def create_data_model():
     ]
     data["num_vehicles"] = 4
     data["depot"] = 0
-    data["demands"] = [0, 1, 1, 2, ...]
+    data["demands"] = [0, 1, 1, 2, 4, 2, 4, 8, 8, 1, 2, 1, 2, 6, 6, 8, 8]
     data["vehicle_capacities"] = [15, 15, 15, 15]
-
     return data
 
 
@@ -69,15 +68,20 @@ def ortools_solver(data):
         True,  # start cumul to zero
         dimension_name,
     )
+    
+    distance_dimension = routing.GetDimensionOrDie(dimension_name)
+    distance_dimension.SetGlobalSpanCostCoefficient(100)
 
     def demand_callback(from_index):
         """Returns the demand of the node."""
         # Convert from routing variable Index to demands NodeIndex.
         from_node = manager.IndexToNode(from_index)
         return data["demands"][from_node]
-    
-    distance_dimension = routing.GetDimensionOrDie(dimension_name)
-    distance_dimension.SetGlobalSpanCostCoefficient(100)
+
+    demand_callback_index = routing.RegisterUnaryTransitCallback(demand_callback)
+    routing.AddDimensionWithVehicleCapacity(
+        demand_callback_index, 0, vehicle_capacities, True, "Capacity"
+    )
 
     search_parameters = pywrapcp.DefaultRoutingSearchParameters()
     search_parameters.first_solution_strategy = routing_enums_pb2.FirstSolutionStrategy.PATH_CHEAPEST_ARC
