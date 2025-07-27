@@ -22,3 +22,22 @@ def create_distance_matrix(data):
     response = send_request(origin_addresses, dest_addresses, API_key)
     distance_matrix += build_distance_matrix(response)
   return distance_matrix
+
+def send_request(origin_addresses, dest_addresses, API_key):
+  """ Build and send request for the given origin and destination addresses."""
+  def build_address_str(addresses):
+    # Build a pipe-separated string of addresses
+    address_str = ''
+    for i in range(len(addresses) - 1):
+      address_str += addresses[i] + '|'
+    address_str += addresses[-1]
+    return address_str
+
+  request = 'https://maps.googleapis.com/maps/api/distancematrix/json?units=imperial'
+  origin_address_str = build_address_str(origin_addresses)
+  dest_address_str = build_address_str(dest_addresses)
+  request = request + '&origins=' + origin_address_str + '&destinations=' + \
+                       dest_address_str + '&key=' + API_key
+  jsonResult = urllib.urlopen(request).read()
+  response = json.loads(jsonResult)
+  return response
