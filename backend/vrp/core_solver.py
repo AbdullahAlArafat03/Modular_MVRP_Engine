@@ -36,6 +36,9 @@ def create_data_model():
     ]
     data["num_vehicles"] = 4
     data["depot"] = 0
+    data["demands"] = [0, 1, 1, 2, ...]
+    data["vehicle_capacities"] = [15, 15, 15, 15]
+
     return data
 
 def distance_matrix(locations):
@@ -60,7 +63,20 @@ def ortools_solver(distance_matrix, num_vehicles, depot_index=0):
         return distance_matrix[from_node][to_node]
 
     transit_callback_index = routing.RegisterTransitCallback(distance_callback)
+    # Define cost of each arc.
     routing.SetArcCostEvaluatorOfAllVehicles(transit_callback_index)
+
+    # Add Distance constraint.
+    dimension_name = "Distance"
+    routing.AddDimension(
+        transit_callback_index,
+        0,  # no slack
+        3000,  # vehicle maximum travel distance
+        True,  # start cumul to zero
+        dimension_name,
+    )
+    distance_dimension = routing.GetDimensionOrDie(dimension_name)
+    distance_dimension.SetGlobalSpanCostCoefficient(100)
 
     search_parameters = pywrapcp.DefaultRoutingSearchParameters()
     search_parameters.first_solution_strategy = routing_enums_pb2.FirstSolutionStrategy.PATH_CHEAPEST_ARC
