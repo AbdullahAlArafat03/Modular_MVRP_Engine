@@ -4,8 +4,6 @@ from geopy.distance import geodesic
 from ortools.constraint_solver import pywrapcp
 from ortools.constraint_solver import routing_enums_pb2
 
-npm run build
-
 
 solver = FastAPI()
 
@@ -41,19 +39,15 @@ def create_data_model():
 
     return data
 
-def distance_matrix(locations):
-    size = len(locations)
-    matrix = []
-    for i in range(size):
-        row = []
-        for j in range(size):
-            dist = geodesic(locations[i], locations[j]).km
-            row.append(int(dist * 1000))  
-        matrix.append(row)
-    return matrix
 
-
-def ortools_solver(distance_matrix, num_vehicles, depot_index=0):
+def ortools_solver(data):
+    
+    distance_matrix = data["distance_matrix"]
+    demands = data["demands"]
+    vehicle_capacities = data["vehicle_capacities"]
+    num_vehicles = data["num_vehicles"]
+    depot_index = data["depot"]
+    
     manager = pywrapcp.RoutingIndexManager(len(distance_matrix), num_vehicles, depot_index)
     routing = pywrapcp.RoutingModel(manager)
 
@@ -75,6 +69,13 @@ def ortools_solver(distance_matrix, num_vehicles, depot_index=0):
         True,  # start cumul to zero
         dimension_name,
     )
+
+    def demand_callback(from_index):
+        """Returns the demand of the node."""
+        # Convert from routing variable Index to demands NodeIndex.
+        from_node = manager.IndexToNode(from_index)
+        return data["demands"][from_node]
+    
     distance_dimension = routing.GetDimensionOrDie(dimension_name)
     distance_dimension.SetGlobalSpanCostCoefficient(100)
 
@@ -82,10 +83,11 @@ def ortools_solver(distance_matrix, num_vehicles, depot_index=0):
     search_parameters.first_solution_strategy = routing_enums_pb2.FirstSolutionStrategy.PATH_CHEAPEST_ARC
 
     solution = routing.SolveWithParameters(search_parameters)
-    return routing, manager, solution
 
-if solution is None:
-    raise HTTPException(status_code=400, detail="No feasible solution found")
+    if not solution:
+       raise HTTPException(status_code=400, detail="No feasible solution found")
+
+    return routing, manager, solution
 
 
 def get_routes(routing, manager, solution, num_vehicles):
@@ -105,13 +107,6 @@ routes = get_routes(solution, routing, manager)
 # Display the routes.
 for i, route in enumerate(routes):
   print('Route', i, route)
-
-
-def demand_callback(from_index):
-    """Returns the demand of the node."""
-    # Convert from routing variable Index to demands NodeIndex.
-    from_node = manager.IndexToNode(from_index)
-    return data["demands"][from_node]
 
 demand_callback_index = routing.RegisterUnaryTransitCallback(demand_callback)
 routing.AddDimensionWithVehicleCapacity(
