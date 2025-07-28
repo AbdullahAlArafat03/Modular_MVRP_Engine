@@ -9,7 +9,7 @@ def solve_vrp(data: VRPRequest):
     demands = [data.depot.demand] + [stop.demand for stop in data.stops]
     capacities = [v.capacity for v in data.vehicles]
     num_vehicles = len(data.vehicles)
-    depot_index = data.depot_index
+    depot_index = 0
     
     # Solve with constraints
     data_model = {
