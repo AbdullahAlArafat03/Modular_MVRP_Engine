@@ -1,5 +1,5 @@
 def create_distance_matrix(data):
-  addresses = data.locations
+  addresses = data
   API_key = data["API_key"]
   # Distance Matrix API only accepts 100 elements per request, so get rows in multiple requests.
   max_elements = 100
