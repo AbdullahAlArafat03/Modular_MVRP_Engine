@@ -13,7 +13,7 @@ def solve_vrp(data: VRPRequest):
     
     # Solve with constraints
     data_model = {
-    "distance_matrix": create_distance_matrix(locations),
+    "distance_matrix": create_distance_matrix(locations, API_key),
     "demands": demands,
     "vehicle_capacities": capacities,
     "num_vehicles": num_vehicles,
