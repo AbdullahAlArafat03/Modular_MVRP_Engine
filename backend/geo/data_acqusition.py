@@ -1,6 +1,7 @@
 import openrouteservice
 from OSMPythonTools.api import Api
 from OSMPythonTools.overpass import Overpass
+from OSMPythonTools.nominatim import Nominatim
 from OSMPythonTools.overpass import overpassQueryBuilder
 from OSMPythonTools.data import Data, dictRangeYears, ALL
 
