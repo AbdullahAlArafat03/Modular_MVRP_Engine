@@ -15,6 +15,7 @@ class VRPRequest(BaseModel):
     depot: Location
     vehicles: List[Vehicle]
     stops: List[Location]
+    api_key: str
 
 class Route(BaseModel):
     vehicle_id: str
