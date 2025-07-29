@@ -24,7 +24,7 @@ request_data = VRPRequest(
 )
 
 # Run the solver
-solution = solve_vrp(request_data, api_key=API_KEY)
+solution = solve_vrp(request_data)
 
 # Print routes
 for idx, route in enumerate(solution["routes"]):
