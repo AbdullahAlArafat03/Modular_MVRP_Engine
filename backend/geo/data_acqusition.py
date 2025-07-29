@@ -29,7 +29,7 @@ busStop.license()
 # http://opendatacommons.org/licenses/odbl/1-0/
 coords = [(el.lat(), el.lon()) for el in busStops.elements()]
 
-client = openrouteservice.Client(key='your-api-key')
+client = openrouteservice.Client(key=os.getenv("ORS_API_KEY"))
 
 matrix = client.distance_matrix(
     locations=coords[:10],  # limit to small batches
