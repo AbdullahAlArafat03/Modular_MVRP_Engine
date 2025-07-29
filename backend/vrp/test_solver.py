@@ -19,7 +19,7 @@ request_data = VRPRequest(
     vehicles=[
         Vehicle(id="v1", capacity=10, type="van"),
         Vehicle(id="v2", capacity=12, type="truck")
-    ]
+    ],
     api_key=api_key
 )
 
