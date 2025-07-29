@@ -4,8 +4,8 @@ from vrp.core_solver import ortools_solver, get_routes
 from dotenv import load_dotenv
 from vrp.models import VRPRequest
 
-    load_dotenv()
-    API_key = os.getenv("GOOGLE_API_KEY")
+load_dotenv()
+API_key = os.getenv("API_KEY")
 
 def solve_vrp(data: VRPRequest):
     # Convert to OR-Tools format
