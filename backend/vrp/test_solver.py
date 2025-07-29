@@ -1,3 +1,4 @@
+from dotenv import load_dotenv
 from vrp.models import VRPRequest, Location, Vehicle
 from vrp.solver import solve_vrp
 
