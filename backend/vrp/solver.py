@@ -1,7 +1,11 @@
+import os
 from geo.distance_matrix import create_distance_matrix
 from vrp.core_solver import ortools_solver, get_routes
+from dotenv import load_dotenv
 from vrp.models import VRPRequest
 
+    load_dotenv()
+    API_key = os.getenv("GOOGLE_API_KEY")
 
 def solve_vrp(data: VRPRequest):
     # Convert to OR-Tools format
@@ -10,7 +14,6 @@ def solve_vrp(data: VRPRequest):
     capacities = [v.capacity for v in data.vehicles]
     num_vehicles = len(data.vehicles)
     depot_index = 0
-    API_key = data.api_key
     
     # Solve with constraints
     data_model = {
