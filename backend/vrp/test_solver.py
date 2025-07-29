@@ -5,7 +5,7 @@ from vrp.solver import solve_vrp
 
 # Load API key from .env file
 load_dotenv()
-API_KEY = os.getenv("API_KEY")
+api_key = os.getenv("API_KEY")
 
 # Create test data
 request_data = VRPRequest(
@@ -20,6 +20,7 @@ request_data = VRPRequest(
         Vehicle(id="v1", capacity=10, type="van"),
         Vehicle(id="v2", capacity=12, type="truck")
     ]
+    api_key=api_key
 )
 
 # Run the solver
