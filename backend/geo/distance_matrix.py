@@ -1,3 +1,7 @@
+import urllib.request
+import json
+
+
 def create_distance_matrix(locations, API_key):
   addresses = [f"{loc.coordinates[0]},{loc.coordinates[1]}" for loc in locations]
   # Distance Matrix API only accepts 100 elements per request, so get rows in multiple requests.
@@ -37,7 +41,7 @@ def send_request(origin_addresses, dest_addresses, API_key):
   dest_address_str = build_address_str(dest_addresses)
   request = request + '&origins=' + origin_address_str + '&destinations=' + \
                        dest_address_str + '&key=' + API_key
-  jsonResult = urllib.urlopen(request).read()
+  jsonResult = urllib.request.urlopen(request).read()
   response = json.loads(jsonResult)
   return response
 
