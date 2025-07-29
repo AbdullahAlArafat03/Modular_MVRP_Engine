@@ -10,6 +10,7 @@ def solve_vrp(data: VRPRequest):
     capacities = [v.capacity for v in data.vehicles]
     num_vehicles = len(data.vehicles)
     depot_index = 0
+    API_key = data.api_key
     
     # Solve with constraints
     data_model = {
