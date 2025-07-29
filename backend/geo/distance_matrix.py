@@ -1,6 +1,5 @@
-def create_distance_matrix(data):
-  addresses = data
-  API_key = data["API_key"]
+def create_distance_matrix(locations, API_key):
+  addresses = [f"{loc.coordinates[0]},{loc.coordinates[1]}" for loc in locations]
   # Distance Matrix API only accepts 100 elements per request, so get rows in multiple requests.
   max_elements = 100
   num_addresses = len(addresses) # 16 in this example.
