@@ -1,6 +1,10 @@
 from vrp.models import VRPRequest, Location, Vehicle
 from vrp.solver import solve_vrp
 
+# Load API key from .env file
+load_dotenv()
+API_KEY = os.getenv("API_KEY")
+
 # Create test data
 request_data = VRPRequest(
     depot=Location(id="depot", coordinates=(40.7580, -73.9855), demand=0),
