@@ -14,7 +14,6 @@ request_data = VRPRequest(
         Vehicle(id="v1", capacity=10, type="van"),
         Vehicle(id="v2", capacity=12, type="truck")
     ]
-    api_key="YOUR_GOOGLE_API_KEY"
 )
 
 # Run the solver
