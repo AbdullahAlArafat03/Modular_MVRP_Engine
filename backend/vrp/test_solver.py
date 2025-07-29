@@ -21,8 +21,12 @@ request_data = VRPRequest(
 )
 
 # Run the solver
-solution = solve_vrp(request_data)
+solution = solve_vrp(request_data, api_key=API_KEY)
 
-# Print the result
-for route in solution["routes"]:
-    print(route)
+# Print routes
+for idx, route in enumerate(solution["routes"]):
+    print(f"Vehicle {idx + 1} route: {route}")
+
+# Print emissions
+if "co2" in solution:
+    print(f"\nEstimated CO₂: {solution['co2']} kg")
