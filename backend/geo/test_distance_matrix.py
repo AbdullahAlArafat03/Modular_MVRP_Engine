@@ -1,1 +1,4 @@
 from distance_matrix import create_distance_matrix
+from distance_matrix import send_request
+from distance_matrix import build_distance_matrix
+
