@@ -8,7 +8,7 @@ from vrp.models import VRPRequest
 load_dotenv()
 API_key = os.getenv("API_KEY")
 
-def solve_vrp(data: VRPRequest):
+def adapter(data: VRPRequest):
     # Convert to OR-Tools format
     locations =  [data.depot] + data.stops
     demands = [data.depot.demand] + [stop.demand for stop in data.stops]
