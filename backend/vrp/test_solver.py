@@ -23,7 +23,7 @@ request_data = VRPRequest(
     api_key= API_KEY
 )
 
-solution = solve_vrp(request_data)
+solution = adapter(request_data)
 
 if solution.get("routes"):
     for idx, route in enumerate(solution["routes"]):
