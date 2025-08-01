@@ -47,7 +47,7 @@ def ortools_solver(data):
     num_vehicles = data["num_vehicles"]
     depot_index = data["depot"]
     
-    manager = pywrapcp.RoutingIndexManager(len(distance_matrix), num_vehicles, depot_index)
+    manager = pywrapcp.RoutingIndexManager(len(distance_matrix), num_vehicles, start_depots, end_depots)
     routing = pywrapcp.RoutingModel(manager)
 
     def distance_callback(from_index, to_index):
