@@ -50,6 +50,15 @@ def ortools_solver(data):
     manager = pywrapcp.RoutingIndexManager(len(distance_matrix), num_vehicles, start_depots, end_depots)
     routing = pywrapcp.RoutingModel(manager)
 
+    def time_callback(from_index, to_index):
+        """Returns the travel time between the two nodes."""
+        # Convert from routing variable Index to time matrix NodeIndex.
+        from_node = manager.IndexToNode(from_index)
+        to_node = manager.IndexToNode(to_index)
+        return data["time_matrix"][from_node][to_node]
+    
+    transit_callback_index = routing.RegisterTransitCallback(time_callback)
+
     def distance_callback(from_index, to_index):
         from_node = manager.IndexToNode(from_index)
         to_node = manager.IndexToNode(to_index)
