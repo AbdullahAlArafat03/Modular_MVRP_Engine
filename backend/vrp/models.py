@@ -10,6 +10,8 @@ class Vehicle(BaseModel):
     id: str
     capacity: int
     type: str
+    cost_per_km: float 
+    fixed_cost: float   
 
 class VRPRequest(BaseModel):
     depot: Location
