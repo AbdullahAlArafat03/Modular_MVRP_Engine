@@ -15,6 +15,8 @@ class Vehicle(BaseModel):
 
 class VRPRequest(BaseModel):
     depot: Location
+    start_depots: List[int]
+    end_depots: List[int]
     vehicles: List[Vehicle]
     stops: List[Location]
     api_key: str
