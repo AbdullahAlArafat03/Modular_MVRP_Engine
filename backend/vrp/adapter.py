@@ -14,7 +14,9 @@ def adapter(data: VRPRequest):
     demands = [data.depot.demand] + [stop.demand for stop in data.stops]
     capacities = [v.capacity for v in data.vehicles]
     num_vehicles = len(data.vehicles)
-    depot_index = 0
+    depot_start_index = data.start_depot
+    depot_end_index = data.end_depot
+    
     
     # Solve with constraints
     data_model = {
@@ -22,7 +24,8 @@ def adapter(data: VRPRequest):
     "demands": demands,
     "vehicle_capacities": capacities,
     "num_vehicles": num_vehicles,
-    "depot": depot_index
+    "depot_start": depot_start_index,
+    "depot_end": depot_end_index
 }
     routing, manager, solution = ortools_solver(data_model)
     
