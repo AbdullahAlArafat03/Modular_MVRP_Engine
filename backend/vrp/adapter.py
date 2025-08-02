@@ -24,8 +24,8 @@ def adapter(data: VRPRequest):
     "demands": demands,
     "vehicle_capacities": capacities,
     "num_vehicles": num_vehicles,
-    "start_depots": depot_start_index,
-    "end_depots": depot_end_index
+    "start_depots": data.start_depots,
+    "end_depots": data.end_depots
 }
     routing, manager, solution = ortools_solver(data_model)
     
