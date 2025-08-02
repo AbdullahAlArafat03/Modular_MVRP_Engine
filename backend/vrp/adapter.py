@@ -27,6 +27,9 @@ def adapter(data: VRPRequest):
     "start_depots": data.start_depots,
     "end_depots": data.end_depots
 }
+    print("✅ Sending this to ortools_solver:")
+    print(data_model.keys())  # or json.dumps(data_model, indent=2) if serializable
+    
     routing, manager, solution = ortools_solver(data_model)
     
     # Return list of routes
