@@ -4,6 +4,7 @@ from typing import List, Tuple
 class Location(BaseModel):
     id: str
     coordinates: Tuple[float, float]
+    time_window: Tuple[int, int]
     demand: int = 0
 
 class Vehicle(BaseModel):
