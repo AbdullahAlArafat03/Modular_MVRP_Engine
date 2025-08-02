@@ -20,6 +20,8 @@ request_data = VRPRequest(
         Vehicle(id="v1", capacity=10, type="van", cost_per_km=1.0, fixed_cost=100.0),
         Vehicle(id="v2", capacity=12, type="truck",  cost_per_km=2.0, fixed_cost=150.0)
     ],
+    start_depot = [0,0],
+    end_depot = [0,0],
     api_key= API_KEY
 )
 
