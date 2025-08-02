@@ -17,8 +17,8 @@ request_data = VRPRequest(
         Location(id="D", coordinates=(40.748817, -73.985428), time_window=(0, 1000), demand=4)
     ],
     vehicles=[
-        Vehicle(id="v1", capacity=10, type="van"),
-        Vehicle(id="v2", capacity=12, type="truck")
+        Vehicle(id="v1", capacity=10, type="van", cost_per_km=1.0, fixed_cost=100.0),
+        Vehicle(id="v2", capacity=12, type="truck",  cost_per_km=2.0, fixed_cost=150.0)
     ],
     api_key= API_KEY
 )
