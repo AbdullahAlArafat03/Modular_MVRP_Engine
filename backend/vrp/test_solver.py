@@ -10,6 +10,8 @@ API_KEY = os.getenv("API_KEY")
 # Create test data
 request_data = VRPRequest(
     depot=Location(id="depot", coordinates=(40.7580, -73.9855), time_window=(0, 1000), demand=0),
+    start_depot = [0,0],
+    end_depot = [0,0],
     stops=[
         Location(id="A", coordinates=(40.730610, -73.935242), time_window=(0, 1000), demand=5),
         Location(id="B", coordinates=(40.712776, -74.005974), time_window=(0, 1000), demand=3),
@@ -20,8 +22,6 @@ request_data = VRPRequest(
         Vehicle(id="v1", capacity=10, type="van", cost_per_km=1.0, fixed_cost=100.0),
         Vehicle(id="v2", capacity=12, type="truck",  cost_per_km=2.0, fixed_cost=150.0)
     ],
-    start_depot = [0,0],
-    end_depot = [0,0],
     api_key= API_KEY
 )
 
