@@ -14,8 +14,8 @@ def adapter(data: VRPRequest):
     demands = [data.depot.demand] + [stop.demand for stop in data.stops]
     capacities = [v.capacity for v in data.vehicles]
     num_vehicles = len(data.vehicles)
-    depot_start_index = data.start_depot
-    depot_end_index = data.end_depot
+    depot_start_index = data.start_depots
+    depot_end_index = data.end_depots
     
     
     # Solve with constraints
