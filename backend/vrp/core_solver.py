@@ -47,7 +47,6 @@ def ortools_solver(data):
     demands = data["demands"]
     vehicle_capacities = data["vehicle_capacities"]
     num_vehicles = data["num_vehicles"]
-    depot_index = data["depot"]
     start_depot_index = data["start_depot"]
     end_depot_index = data["end_depot"]
     
