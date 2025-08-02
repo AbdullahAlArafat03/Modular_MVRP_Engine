@@ -34,6 +34,8 @@ def create_data_model():
     ]
     data["num_vehicles"] = 4
     data["depot"] = 0
+    data["start_depot"] = [0,0]
+    data["end_depot"] = [0,0]
     data["demands"] = [0, 1, 1, 2, 4, 2, 4, 8, 8, 1, 2, 1, 2, 6, 6, 8, 8]
     data["vehicle_capacities"] = [15, 15, 15, 15]
     return data
@@ -46,6 +48,8 @@ def ortools_solver(data):
     vehicle_capacities = data["vehicle_capacities"]
     num_vehicles = data["num_vehicles"]
     depot_index = data["depot"]
+    start_depot_index = data["start_depot"]
+    end_depot_index = data["end_depot"]
     
     manager = pywrapcp.RoutingIndexManager(len(distance_matrix), num_vehicles, start_depots, end_depots)
     routing = pywrapcp.RoutingModel(manager)
