@@ -25,6 +25,9 @@ request_data = VRPRequest(
 
 solution = adapter(request_data)
 
+print("Step 1: Preparing data model...")
+print(data_model)
+
 if solution.get("routes"):
     for idx, route in enumerate(solution["routes"]):
         print(f"Vehicle {idx + 1} route: {route}")
