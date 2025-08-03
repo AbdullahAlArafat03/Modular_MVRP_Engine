@@ -131,3 +131,16 @@ def get_routes(routing, manager, solution, num_vehicles):
         route.append(manager.IndexToNode(index))  # Add the final stop
         routes.append(route)
     return routes
+
+def get_distance_km(routes, data):
+    total_distance = 0
+    for route in routes:
+        for i in range(len(route) - 1):
+            from_node = route[i]
+            to_node = route[i + 1]
+            total_distance += data["distance_matrix"][from_node][to_node]
+    distance_km = total_distance / 1000
+    return distance_km
+
+
+
