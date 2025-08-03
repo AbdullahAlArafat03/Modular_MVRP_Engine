@@ -65,7 +65,7 @@ def ortools_solver(data):
         to_node = manager.IndexToNode(to_index)
         return data["time_matrix"][from_node][to_node]
     
-    transit_callback_index = routing.RegisterTransitCallback(time_callback)
+    time_callback_index = routing.RegisterTransitCallback(time_callback)
 
     routing.AddDimensionWithVehicleCapacity(
     time_callback_index,
@@ -79,14 +79,14 @@ def ortools_solver(data):
         to_node = manager.IndexToNode(to_index)
         return distance_matrix[from_node][to_node]
 
-    transit_callback_index = routing.RegisterTransitCallback(distance_callback)
+    distance_callback_index = routing.RegisterTransitCallback(distance_callback)
     # Define cost of each arc.
     routing.SetArcCostEvaluatorOfAllVehicles(transit_callback_index)
 
     # Add Distance constraint.
     dimension_name = "Distance"
     routing.AddDimensionWithVehicleCaapacity(
-        transit_callback_index,
+        distance_callback_index,
         0,  # no slack
         vehicle_capacities,  # vehicle maximum travel distance
         True,  # start cumul to zero
