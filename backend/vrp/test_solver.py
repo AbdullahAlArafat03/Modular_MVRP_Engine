@@ -25,7 +25,9 @@ request_data = VRPRequest(
     api_key= API_KEY
 )
 
+
 solution = adapter(request_data)
+total_km = get_distance_km(routes, data)
 
 print("Step 1: Preparing data model...")
 print(data_model)
@@ -51,5 +53,5 @@ for vehicle_id in range(num_vehicles):
 print(f"\nTime per Vehicle: {end_time - start_time} minutes")
 
 # Estimated CO2
-co2_estimate = estimate_emissions(solution)
+co2_estimate = estimate_emissions(total_km)
 print(f"\nEstimated CO₂: {co2_estimate} kg")
