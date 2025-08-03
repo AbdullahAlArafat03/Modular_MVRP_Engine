@@ -32,12 +32,16 @@ def create_data_model():
       [662, 1210, 754, 1358, 1244, 708, 480, 856, 514, 468, 354, 844, 730, 536, 194, 798, 0],
         # fmt: on
     ]
+    data["time_matrix"] = [
+        [int(dist / 1000) for dist in row]
+        for row in data["distance_matrix"]]
     data["num_vehicles"] = 4
     data["depot"] = 0
     data["start_depot"] = [0,0]
     data["end_depot"] = [0,0]
+    data["vehicle_time_limits"] = [40, 45, 50, 60]
     data["demands"] = [0, 1, 1, 2, 4, 2, 4, 8, 8, 1, 2, 1, 2, 6, 6, 8, 8]
-    data["vehicle_capacities"] = [15, 15, 15, 15]
+    data["vehicle_capacities"] = [1000, 1500, 1200, 1400]
     return data
 
 
@@ -47,6 +51,7 @@ def ortools_solver(data):
     demands = data["demands"]
     vehicle_capacities = data["vehicle_capacities"]
     num_vehicles = data["num_vehicles"]
+    vehicle_time_limits = data["vehicle_time_limits"]
     start_depots = data["start_depots"]
     end_depots = data["end_depots"]
     
@@ -62,6 +67,13 @@ def ortools_solver(data):
     
     transit_callback_index = routing.RegisterTransitCallback(time_callback)
 
+    routing.AddDimensionWithVehicleCapacity(
+    time_callback_index,
+    0,  # slack
+    data_model["vehicle_time_limits"],
+    True,
+    "Time")
+
     def distance_callback(from_index, to_index):
         from_node = manager.IndexToNode(from_index)
         to_node = manager.IndexToNode(to_index)
@@ -73,10 +85,10 @@ def ortools_solver(data):
 
     # Add Distance constraint.
     dimension_name = "Distance"
-    routing.AddDimension(
+    routing.AddDimensionWithVehicleCaapacity(
         transit_callback_index,
         0,  # no slack
-        3000,  # vehicle maximum travel distance
+        vehicle_capacities,  # vehicle maximum travel distance
         True,  # start cumul to zero
         dimension_name,
     )
