@@ -35,6 +35,21 @@ if solution.get("routes"):
         print(f"Vehicle {idx + 1} route: {route}")
 else:
     print("No routes found.")
+    
+# Total Cost
+print(f"\nTotal Cost: {routing.GetCost(solution)}")
 
-if "co2" in solution:
-    print(f"\nEstimated CO₂: {solution['co2']} kg")
+# Time per Vehicle
+time_dimension = routing.GetDimensionOrDie("Time")
+total_cost = routing.GetCost(solution)
+for vehicle_id in range(num_vehicles):
+    start_index = routing.Start(vehicle_id)
+    end_index = routing.End(vehicle_id)
+
+    start_time = solution.Value(time_dimension.CumlVar(start_index))
+    end_time = solution.Value(time_dimension.CumlVar(end_index))
+print(f"\nTime per Vehicle: {end_time - start_time} minutes")
+
+# Estimated CO2
+co2_estimate = estimate_emissions(solution)
+print(f"\nEstimated CO₂: {co2_estimate} kg")
