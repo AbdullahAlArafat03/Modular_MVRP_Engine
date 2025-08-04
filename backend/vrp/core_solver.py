@@ -67,6 +67,7 @@ def ortools_solver(data):
     
     time_callback_index = routing.RegisterTransitCallback(time_callback)
 
+    # Add Time Constraint
     routing.AddDimensionWithVehicleCapacity(
     time_callback_index,
     0,  # slack
@@ -81,7 +82,7 @@ def ortools_solver(data):
 
     distance_callback_index = routing.RegisterTransitCallback(distance_callback)
     # Define cost of each arc.
-    routing.SetArcCostEvaluatorOfAllVehicles(transit_callback_index)
+    routing.SetArcCostEvaluatorOfAllVehicles(distance_callback_index)
 
     # Add Distance constraint.
     dimension_name = "Distance"
@@ -105,17 +106,18 @@ def ortools_solver(data):
     demand_callback_index = routing.RegisterUnaryTransitCallback(demand_callback)
     routing.AddDimensionWithVehicleCapacity(
         demand_callback_index, 0, vehicle_capacities, True, "Capacity"
-    )
+  )
 
     search_parameters = pywrapcp.DefaultRoutingSearchParameters()
-    search_parameters.first_solution_strategy = routing_enums_pb2.FirstSolutionStrategy.PATH_CHEAPEST_ARC
+    search_parameters.first_solution_strategy = routing_enums_pb2.FirstSolutionStrategy.PATH_CHEAPEST_ARC          # Heuristic Method
+    search_parameters.local_search_metaheuristic = (routing_enums_pb2.LocalSearchMetaheuristic.GUIDED_LOCAL_SEARCH)          # Metaheuristic Method
+    search_parameters.first_solution_strategy = routing_enums_pb2.FirstSolutionStrategy.GLOBAL_CHEAPEST_INSERTION          # Alternative Heuristic Method
     search_parameters.time_limit.FromSeconds(10)
 
     solution = routing.SolveWithParameters(search_parameters)
 
     if not solution:
        raise HTTPException(status_code=400, detail="No feasible solution found")
-
     return routing, manager, solution
 
 
