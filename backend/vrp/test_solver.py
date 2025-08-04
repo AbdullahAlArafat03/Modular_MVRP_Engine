@@ -37,7 +37,15 @@ if solution.get("routes"):
         print(f"Vehicle {idx + 1} route: {route}")
 else:
     print("No routes found.")
-    
+
+# Benchmarking Module
+
+    #  |
+    #  |
+    #  |
+    #  V
+
+
 # Total Cost
 print(f"\nTotal Cost: {routing.GetCost(solution)}")
 
