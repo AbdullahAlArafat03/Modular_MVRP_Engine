@@ -32,18 +32,21 @@ total_km = get_distance_km(routes, data)
 print("Step 1: Preparing data model...")
 print(data_model)
 
-if solution.get("routes"):
-    for idx, route in enumerate(solution["routes"]):
-        print(f"Vehicle {idx + 1} route: {route}")
-else:
-    print("No routes found.")
-
 # Benchmarking Module
 
     #  |
     #  |
     #  |
     #  V
+
+
+
+# Routes
+if solution.get("routes"):
+    for idx, route in enumerate(solution["routes"]):
+        print(f"Vehicle {idx + 1} route: {route}")
+else:
+    print("No routes found.")
 
 
 # Total Cost
