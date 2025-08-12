@@ -1,5 +1,5 @@
 import os
-from vrp.config import API_KEY
+from config import API_KEY
 from geo.distance_matrix import create_distance_matrix
 from core_solver import ortools_solver, get_routes
 from dotenv import load_dotenv
