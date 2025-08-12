@@ -1,7 +1,7 @@
 import os
 from dotenv import load_dotenv
-from vrp.models import VRPRequest, Location, Vehicle
-from vrp.adapter import adapter
+from models import VRPRequest, Location, Vehicle
+from adapter import adapter
 
 # Load API key from .env file
 load_dotenv()
