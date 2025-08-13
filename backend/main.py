@@ -1,7 +1,7 @@
 from fastapi import FastAPI, UploadFile, File
 from fastapi.middleware.cors import CORSMiddleware
 from vrp.models import VRPRequest, VRPResponse
-from vrp.solver import solve_vrp
+from vrp.adapter import adapter
 from vrp.emissions import estimate_emissions
 
 app = FastAPI()
@@ -21,6 +21,6 @@ def root():
 
 @app.post("/solve", response_model=VRPResponse)
 def solve(data: VRPRequest):
-    solution = solve_vrp(data)
+    solution = adapter(data)
     emissions = estimate_emissions(solution)
     return {**solution, "co2": emissions}
