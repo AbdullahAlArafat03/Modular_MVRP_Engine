@@ -1,36 +1,33 @@
-import os
+import os, sys
 from dotenv import load_dotenv
 from models import VRPRequest, Location, Vehicle
 from adapter import adapter
+from core_solver import create_data_model
+from core_solver import get_distance_km
+from core_solver import get_routes
+import json, sys, traceback
 
-# Load API key from .env file
+
+
+print("Loaded:", os.path.abspath(__file__), "__name__ =", __name__, flush=True)
+
 load_dotenv()
-API_KEY = os.getenv("API_KEY")
+API_key = os.getenv("API_KEY")
+
 
 # Create test data
 request_data = VRPRequest(
-    depot=Location(id="depot", coordinates=(40.7580, -73.9855), time_window=(0, 1000), demand=0),
-    start_depots = [0,0],
-    end_depots = [0,0],
-    stops=[
-        Location(id="A", coordinates=(40.730610, -73.935242), time_window=(0, 1000), demand=5),
-        Location(id="B", coordinates=(40.712776, -74.005974), time_window=(0, 1000), demand=3),
-        Location(id="C", coordinates=(40.706192, -74.009160), time_window=(0, 1000), demand=2),
-        Location(id="D", coordinates=(40.748817, -73.985428), time_window=(0, 1000), demand=4)
-    ],
-    vehicles=[
-        Vehicle(id="v1", capacity=10, type="van", cost_per_km=1.0, fixed_cost=100.0),
-        Vehicle(id="v2", capacity=12, type="truck",  cost_per_km=2.0, fixed_cost=150.0)
-    ],
-    api_key= API_KEY
+    create_data_model
 )
 
 
 solution = adapter(request_data)
+get_routes(routing, manager, solution, num_vehicles)
+
 total_km = get_distance_km(routes, data)
 
 print("Step 1: Preparing data model...")
-print(data_model)
+print(request_data)
 
 # Benchmarking Module
 

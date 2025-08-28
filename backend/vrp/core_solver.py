@@ -1,6 +1,4 @@
-from fastapi import FastAPI, Request
-from pydantic import BaseModel
-from geopy.distance import geodesic
+from fastapi import FastAPI, HTTPException
 from ortools.constraint_solver import pywrapcp
 from ortools.constraint_solver import routing_enums_pb2
 
@@ -71,7 +69,7 @@ def ortools_solver(data):
     routing.AddDimensionWithVehicleCapacity(
     time_callback_index,
     0,  # slack
-    data_model["vehicle_time_limits"],
+    vehicle_time_limits,
     True,
     "Time")
 
@@ -86,7 +84,7 @@ def ortools_solver(data):
 
     # Add Distance constraint.
     dimension_name = "Distance"
-    routing.AddDimensionWithVehicleCaapacity(
+    routing.AddDimensionWithVehicleCapacity(
         distance_callback_index,
         0,  # no slack
         vehicle_capacities,  # vehicle maximum travel distance
@@ -111,7 +109,7 @@ def ortools_solver(data):
     search_parameters = pywrapcp.DefaultRoutingSearchParameters()
     search_parameters.first_solution_strategy = routing_enums_pb2.FirstSolutionStrategy.PATH_CHEAPEST_ARC          # Heuristic Method
     search_parameters.local_search_metaheuristic = (routing_enums_pb2.LocalSearchMetaheuristic.GUIDED_LOCAL_SEARCH)          # Metaheuristic Method
-    search_parameters.first_solution_strategy = routing_enums_pb2.FirstSolutionStrategy.GLOBAL_CHEAPEST_INSERTION          # Alternative Heuristic Method
+    search_parameters.first_solution_strategy = routing_enums_pb2.FirstSolutionStrategy.PARALLEL_CHEAPEST_INSERTION         # Alternative Heuristic Method
     search_parameters.time_limit.FromSeconds(10)
 
     solution = routing.SolveWithParameters(search_parameters)
